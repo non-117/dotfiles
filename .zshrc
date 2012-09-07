@@ -28,8 +28,7 @@ WORKON_HOME=$HOME/virtualenvs
 bindkey -e
 
 #complement
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
 
 # encoding
 export LANG=ja_JP.UTF-8
