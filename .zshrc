@@ -70,4 +70,28 @@ PROMPT="
 
 PROMPT2='[%n]> ' 
 
+#history search
+autoload history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^P" history-beginning-search-backward-end
+bindkey "^N" history-beginning-search-forward-end 
+
+#abbreviation
+typeset -A myabbrev
+myabbrev=(
+    "ll"    "| less"
+    "lg"    "| grep"
+    "tx"    "tar -xvzf"
+)
+
+my-expand-abbrev() {
+    local left prefix
+    left=$(echo -nE "$LBUFFER" | sed -e "s/[_a-zA-Z0-9]*$//")
+    prefix=$(echo -nE "$LBUFFER" | sed -e "s/.*[^_a-zA-Z0-9]\([_a-zA-Z0-9]*\)$/\1/")
+    LBUFFER=$left${myabbrev[$prefix]:-$prefix}" "
+}
+zle -N my-expand-abbrev
+bindkey     " "         my-expand-abbrev
+
 source .zsh/plugin/incr*.zsh
