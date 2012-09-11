@@ -5,24 +5,23 @@ SAVEHIST=10000
 setopt hist_ignore_dups
 setopt share_history
 
-zstyle :compinstall filename '/Users/non/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
 #alias
 alias ip="curl 'http://dyn.value-domain.com/cgi-bin/dyn.fcg?ip';echo"
 alias now='date "+%y/%m/%d %H:%M:%S"'
-alias ws="cd ~/Documents/workspace"
+alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
 
 #gentoo
 EPREFIX="$HOME/Gentoo"
-PATH="$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:/Library/PostgreSQL/9.0/bin/"
+PATH="/usr/local/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/"
 
 #python
-export PYTHONPATH="/Users/yoshino/Documents/workspace/:"$PYTHONPATH../
+export PYTHONPATH="$HOME/Documents/workspace/:"$PYTHONPATH../
+export WORKON_HOME=$HOME/virtualenvs
 source `which virtualenvwrapper.sh`
 PIP_RESPECT_VIRTUALENV=true
-WORKON_HOME=$HOME/virtualenvs
-
 
 #emacs keybind
 bindkey -e
@@ -44,19 +43,23 @@ zle reset-prompt
 zle -N cdup
 bindkey '\^' cdup
 
-#cdls
-function cd() {builtin cd $@ && ls -v -F --color=auto}
-
-
 # ls
 case "${OSTYPE}" in
 freebsd*|darwin*)
-  alias ls="ls -GF --color"
+  if [ -d $EPREFIX ];then;
+    alias ls="ls -GF --color"
+  else;
+    alias ls="ls -GF"
+  fi;
   ;;
 linux*)
   alias ls="ls -F --color"
   ;;
 esac
+
+#cdls
+function cd() {builtin cd $@ && ls}
+
 
 alias la='ls -a'
 alias ll='ls -l'
