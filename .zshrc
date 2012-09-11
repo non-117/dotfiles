@@ -35,6 +35,18 @@ export LANG=ja_JP.UTF-8
 
 # cd
 setopt auto_cd
+# cdup
+function cdup() {
+echo
+cd ..
+zle reset-prompt
+}
+zle -N cdup
+bindkey '\^' cdup
+
+#cdls
+function cd() {builtin cd $@ && ls -v -F --color=auto}
+
 
 # ls
 case "${OSTYPE}" in
