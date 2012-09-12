@@ -42,6 +42,9 @@ zle reset-prompt
 }
 zle -N cdup
 bindkey '\^' cdup
+# auto_pushd
+setopt auto_pushd
+setopt pushd_ignore_dups
 
 # ls
 case "${OSTYPE}" in
@@ -58,7 +61,7 @@ linux*)
 esac
 
 #cdls
-function cd() {builtin cd $@ && ls}
+function chpwd() {ls}
 
 
 alias la='ls -a'
