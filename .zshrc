@@ -15,7 +15,7 @@ alias rs="python manage.py runserver"
 
 #gentoo
 EPREFIX="$HOME/Gentoo"
-PATH="/usr/local/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/"
+PATH="/usr/local/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/"
 
 #python
 export PYTHONPATH="$HOME/Documents/workspace/:"$PYTHONPATH../
