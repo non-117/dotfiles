@@ -9,7 +9,7 @@
 ;; optinをメタキーにする
 (setq mac-option-modifier 'meta)
 ;; site-lisp directory
-(setq load-path(cons "/Users/non/.emacs.d/site-lisp/" load-path))
+(setq load-path(cons "~/.emacs.d/site-lisp/" load-path))
 ;; transient-mark-mode
 (transient-mark-mode t)
 
