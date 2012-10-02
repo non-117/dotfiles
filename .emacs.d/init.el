@@ -76,7 +76,7 @@
 
 ;; ghc-mod
 ;; cabal でインストールしたライブラリのコマンドが格納されている bin ディレクトリへのパスを exec-path に追加する
-;;(add-to-list 'exec-path (concat (getenv "HOME") "/.cabal/bin"))
+(add-to-list 'exec-path "~/Library/Haskell/bin")
 ;; ghc-flymake.el などがあるディレクトリ ghc-mod を ~/.emacs.d 以下で管理することにした
 (add-to-list 'load-path "~/.emacs.d/site-lisp/ghc-mod") 
 
