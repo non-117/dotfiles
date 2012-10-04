@@ -1,0 +1,11 @@
+[user]
+	name = non
+	email = mail@non117.com
+[core]
+	editor = emacs
+[color]
+	ui = true
+[alias]
+	st = status
+	ci = commit -a
+	br = branch

@@ -15,7 +15,7 @@ alias rs="python manage.py runserver"
 
 #gentoo
 EPREFIX="$HOME/Gentoo"
-PATH="/usr/local/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/"
+PATH="/usr/local/bin:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.rbenv/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:"
 
 #python
 export PYTHONPATH="$HOME/Documents/workspace/:"$PYTHONPATH../
@@ -112,3 +112,6 @@ zle -N my-expand-abbrev
 bindkey     " "         my-expand-abbrev
 
 source .zsh/plugin/incr*.zsh
+
+# ruby
+eval "$(rbenv init -)"
