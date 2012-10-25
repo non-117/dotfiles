@@ -13,15 +13,21 @@ alias now='date "+%y/%m/%d %H:%M:%S"'
 alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
 
-#gentoo
+#path
 EPREFIX="$HOME/Gentoo"
 PATH="/usr/local/bin:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.rbenv/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:"
 
 #python
-export PYTHONPATH="$HOME/Documents/workspace/:"$PYTHONPATH../
+export PYTHONPATH="/usr/local/opencv/lib/python0./dist-packages:$HOME/Documents/workspace/:$PYTHONPATH"
 export WORKON_HOME=$HOME/virtualenvs
 source `which virtualenvwrapper.sh`
 PIP_RESPECT_VIRTUALENV=true
+
+#opencv
+export DYLD_FALLBACK_LIBRARY_PATH="/usr/local/opencv/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+export INCLUDE_PATH="/usr/local/opencv/include:$INCLUDE_PATH"
+export LD_LIBRARY_PATH="/usr/local/opencv/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/usr/local/opencv/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 #emacs keybind
 bindkey -e
