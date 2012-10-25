@@ -103,7 +103,7 @@ bindkey "^N" history-beginning-search-forward-end
 #abbreviation
 typeset -A myabbrev
 myabbrev=(
-    "ll"    "| less"
+#    "ll"    "| less"
     "lg"    "| grep"
     "tx"    "tar -xvzf"
 )
