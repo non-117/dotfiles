@@ -88,7 +88,7 @@ bindkey "\C-m" alls
 autoload colors
 colors
 PROMPT="
- %{${fg[yellow]}%}%~%{${reset_color}%} 
+(✿╹◡╹)c %{${fg[yellow]}%}%~%{${reset_color}%} 
 [%n]$ "
 
 PROMPT2='[%n]> ' 

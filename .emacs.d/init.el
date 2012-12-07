@@ -54,6 +54,17 @@
 	       ) auto-insert-alist))
 (add-hook 'python-mode-hook 'auto-insert)
 
+;; jedi
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-deferred")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-epc")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-ctable")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/emacs-jedi")
+(require 'auto-complete-config)
+(require 'python)
+(require 'jedi)
+(add-hook 'python-mode-hook 'jedi:ac-setup)
+(define-key python-mode-map (kbd "<C-tab>") 'jedi:complete)
+
 ;; js2
 (autoload 'js2-mode "js2" nil t)
 (add-to-list 'auto-mode-alist '("\\.js$" .js2-mode))
