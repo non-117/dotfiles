@@ -14,11 +14,11 @@ alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
 
 #path
-EPREFIX="$HOME/Gentoo"
-PATH="/usr/local/bin:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.rbenv/bin:$EPREFIX/usr/sbin:$EPREFIX/usr/bin:$EPREFIX/bin:$EPREFIX/tmp/usr/bin:$EPREFIX/tmp/bin:$PATH:"
+PATH="/usr/local/bin:/Library/PostgreSQL/9.0/bin/:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.rbenv/bin:$PATH:"
 
 #python
 export PYTHONPATH="/usr/local/opencv/lib/python0./dist-packages:$HOME/Documents/workspace/:$PYTHONPATH"
+export INCLUDE_PATH="/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/include/python2.7:$INCLUDE_PATH"
 export WORKON_HOME=$HOME/virtualenvs
 source `which virtualenvwrapper.sh`
 PIP_RESPECT_VIRTUALENV=true
@@ -55,11 +55,7 @@ setopt pushd_ignore_dups
 # ls
 case "${OSTYPE}" in
 freebsd*|darwin*)
-  if [ -d $EPREFIX ];then;
-    alias ls="ls -GF --color"
-  else;
-    alias ls="ls -GF"
-  fi;
+  alias ls="ls -GF"
   ;;
 linux*)
   alias ls="ls -F --color"
