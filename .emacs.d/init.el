@@ -14,13 +14,13 @@
 (transient-mark-mode t)
 
 ;; install-elisp
-(require 'install-elisp)
-(setq install-elisp-repository-directory "~/.emacs.d/site-lisp/")
+;;(require 'install-elisp)
+;;(setq install-elisp-repository-directory "~/.emacs.d/site-lisp/")
 ;; Autoinstall
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/site-lisp/")
-(auto-install-update-emacswiki-package-name t)
-(auto-install-compatibility-setup)
+;;(require 'auto-install)
+;;(setq auto-install-directory "~/.emacs.d/site-lisp/")
+;;(auto-install-update-emacswiki-package-name t)
+;;(auto-install-compatibility-setup)
 
 ;; auto-complete
 (require 'auto-complete)
