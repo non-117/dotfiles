@@ -13,6 +13,19 @@
 ;; transient-mark-mode
 (transient-mark-mode t)
 
+(add-to-list 'load-path "~/.emacs.d/el-get/el-get/")
+(setq el-get-dir "~/.emacs.d/site-lisp/el-get/")
+
+(unless (require 'el-get nil 'noerror)
+  (with-current-buffer
+      (url-retrieve-synchronously
+       "https://raw.github.com/dimitri/el-get/master/el-get-install.el")
+    (goto-char (point-max))
+    (eval-print-last-sexp)))
+
+(el-get 'sync)
+
+
 ;; install-elisp
 ;;(require 'install-elisp)
 ;;(setq install-elisp-repository-directory "~/.emacs.d/site-lisp/")
