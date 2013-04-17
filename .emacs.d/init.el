@@ -25,16 +25,6 @@
 
 (el-get 'sync)
 
-
-;; install-elisp
-;;(require 'install-elisp)
-;;(setq install-elisp-repository-directory "~/.emacs.d/site-lisp/")
-;; Autoinstall
-;;(require 'auto-install)
-;;(setq auto-install-directory "~/.emacs.d/site-lisp/")
-;;(auto-install-update-emacswiki-package-name t)
-;;(auto-install-compatibility-setup)
-
 ;; auto-complete
 (require 'auto-complete)
 (global-auto-complete-mode t)
@@ -108,3 +98,10 @@
 
 (add-hook 'haskell-mode-hook  (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
+
+;; nyan-mode
+;;(when (eq window-system 'ns)
+;;  (require 'nyan-mode)
+;;  (nyan-mode)
+;;  (nyan-start-animation)
+;;  )
