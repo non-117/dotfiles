@@ -99,6 +99,12 @@
 (add-hook 'haskell-mode-hook  (lambda () (ghc-init)))
 (add-hook 'haskell-mode-hook (lambda () (ghc-init) (flymake-mode)))
 
+;;slime
+(setq inferior-lisp-program "/usr/local/bin/clisp")
+(add-to-list 'load-path "/Applications/slime")
+(require 'slime)
+(slime-setup)
+
 ;; nyan-mode
 ;;(when (eq window-system 'ns)
 ;;  (require 'nyan-mode)
