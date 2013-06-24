@@ -19,7 +19,7 @@ PATH="/usr/local/bin:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.
 #node
 if [[ -f ~/.nodebrew/nodebrew ]]; then
     export PATH=$HOME/.nodebrew/current/bin:$PATH
-    nodebrew use latest
+    nodebrew use 0.10
 fi
 
 #python
@@ -101,6 +101,10 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end 
+
+#url quote magic
+autoload -Uz url-quote-magic
+zle -N self-insert url-quote-magic
 
 #abbreviation
 typeset -A myabbrev
