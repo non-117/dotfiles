@@ -9,3 +9,7 @@
 	st = status
 	ci = commit -a
 	br = branch
+	pl = pull
+	ps = push
+	ch = checkout
+	cl = clone
