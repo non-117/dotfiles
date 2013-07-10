@@ -1,43 +1,21 @@
-from functools import partial
-from types import FunctionType, LambdaType, TupleType
+from functools import partial, reduce
+from itertools import takewhile, starmap
+from operator import iconcat
 
 flip = lambda f: lambda *a: f(*reversed(a))
+concat = partial(reduce, iconcat)
 
-class _():
-    def _isfun(self, obj):
-        return type(obj) is FunctionType or type(obj) is LambdaType
 
-    def __init__(self, *obj):
-        if len(obj) == 0:
-            self.func = lambda x:x
-        else:
-            if len(obj) > 1:
-                if not self._isfun(obj[0]):
-                    raise "tuple (func, arg1, .. ) must be applied"
-                    
-                self.func = partial(obj[0], *obj[1:])
-            else:
-                if self._isfun(obj[0]):
-                    self.func = lambda x:obj[0](x)
-                else:
-                    self.func = lambda x:obj[0]
-    
-    def __lshift__(self, tpl):
-        if type(tpl) is TupleType:
-            if not self._isfun(tpl[0]):
-                raise "tuple (func, arg1, .. ) must be applied"
-
-            f = partial(tpl[0], *tpl[1:])
-            f1 = self.func
-            self.func = lambda x:f1(f(x))
-            return self
-        else:
-            if self._isfun(tpl):
-                f1 = self.func
-                self.func = lambda x:f1(tpl(x))
-                return self
-            else:
-                return self.func(tpl)
-
-    def __call__(self, *tpl, **args):
-        return self.func(*tpl, **args)
+def compose_two(g, f):
+    """Function composition for two functions, e.g. compose_two(f, g)(x) == f(g(x))"""
+    return lambda *args, **kwargs: g(f(*args, **kwargs))
+ 
+def compose(*funcs):
+    """Compose an arbitrary number of functions left-to-right passed as args"""
+    return reduce(compose_two, funcs)
+ 
+def transform_args(func, transformer):
+    return lambda *args: func(*transformer(args))
+ 
+composed_partials = transform_args(compose, partial(starmap, partial))
+pipe = transform_args(composed_partials, reversed)

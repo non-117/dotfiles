@@ -14,7 +14,7 @@ alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
 
 #path
-PATH="/usr/local/bin:/usr/local/share/python/:$HOME/Library/Haskell/bin/:$HOME/.rbenv/bin:$PATH"
+PATH="/usr/local/bin:$HOME/Library/Haskell/bin:$HOME/.rbenv/bin:$PATH:/usr/local/share/python"
 
 #node
 if [[ -f ~/.nodebrew/nodebrew ]]; then
@@ -91,7 +91,7 @@ autoload colors
 colors
 PROMPT="
 (✿╹◡╹)c %{${fg[yellow]}%}%~%{${reset_color}%} 
-[%n]$ "
+[%n@${HOST}]$ "
 
 PROMPT2='[%n]> ' 
 
