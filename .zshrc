@@ -12,9 +12,10 @@ alias ip="curl 'http://dyn.value-domain.com/cgi-bin/dyn.fcg?ip';echo"
 alias now='date "+%y/%m/%d %H:%M:%S"'
 alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
+alias cot='open $1 -a /Applications/CotEditor.app'
 
 #path
-PATH="/usr/local/bin:$HOME/Library/Haskell/bin:$HOME/.rbenv/bin:$PATH:/usr/local/share/python"
+PATH="/usr/local/bin:$HOME/Library/Haskell/bin:$HOME/.rbenv/bin:$PATH"
 
 #node
 if [[ -f ~/.nodebrew/nodebrew ]]; then
@@ -23,17 +24,17 @@ if [[ -f ~/.nodebrew/nodebrew ]]; then
 fi
 
 #python
-export PYTHONPATH="/usr/local/opencv/lib/python0./dist-packages:$HOME/Documents/workspace/:$HOME/.pythonlib/:$PYTHONPATH"
+export PYTHONPATH="$HOME/Documents/workspace/:$HOME/.pythonlib/:$PYTHONPATH"
 export INCLUDE_PATH="/usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/include/python2.7:$INCLUDE_PATH"
 export WORKON_HOME=$HOME/virtualenvs
 source `which virtualenvwrapper.sh`
 PIP_RESPECT_VIRTUALENV=true
 
 #opencv
-export DYLD_FALLBACK_LIBRARY_PATH="/usr/local/opencv/lib:$DYLD_FALLBACK_LIBRARY_PATH"
-export INCLUDE_PATH="/usr/local/opencv/include:$INCLUDE_PATH"
-export LD_LIBRARY_PATH="/usr/local/opencv/lib:$LD_LIBRARY_PATH"
-export PKG_CONFIG_PATH="/usr/local/opencv/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
+#export DYLD_FALLBACK_LIBRARY_PATH="/usr/local/opencv/lib:$DYLD_FALLBACK_LIBRARY_PATH"
+#export INCLUDE_PATH="/usr/local/opencv/include:$INCLUDE_PATH"
+#export LD_LIBRARY_PATH="/usr/local/opencv/lib:$LD_LIBRARY_PATH"
+#export PKG_CONFIG_PATH="/usr/local/opencv/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
 
 #emacs keybind
 bindkey -e
@@ -91,7 +92,7 @@ autoload colors
 colors
 PROMPT="
 (✿╹◡╹)c %{${fg[yellow]}%}%~%{${reset_color}%} 
-[%n@${HOST}]$ "
+[%B%F{6}%n%f@%F{2}${HOST}%f%b]$ "
 
 PROMPT2='[%n]> ' 
 
