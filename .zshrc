@@ -13,9 +13,11 @@ alias now='date "+%y/%m/%d %H:%M:%S"'
 alias ws="cd $HOME/Documents/workspace"
 alias rs="python manage.py runserver"
 alias cot='open $1 -a /Applications/CotEditor.app'
+alias vpn='sudo openvpn $HOME/Dropbox/Server/openvpn/openvpn443.conf'
+alias py3='python3'
 
 #path
-PATH="/usr/local/bin:$HOME/Library/Haskell/bin:$HOME/.rbenv/bin:$PATH"
+PATH="/usr/local/bin:/usr/local/sbin:$HOME/Library/Haskell/bin:$HOME/.rbenv/bin:$PATH"
 
 #node
 if [[ -f ~/.nodebrew/nodebrew ]]; then
@@ -24,11 +26,11 @@ if [[ -f ~/.nodebrew/nodebrew ]]; then
 fi
 
 #python
-export PYTHONPATH="$HOME/Documents/workspace/:$HOME/.pythonlib/:$PYTHONPATH"
-export INCLUDE_PATH="/usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/include/python2.7:$INCLUDE_PATH"
-export WORKON_HOME=$HOME/virtualenvs
-source `which virtualenvwrapper.sh`
-PIP_RESPECT_VIRTUALENV=true
+#export PYTHONPATH="$HOME/Documents/workspace/:$HOME/.pythonlib/:$PYTHONPATH"
+#export INCLUDE_PATH="/usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/include/python2.7:$INCLUDE_PATH"
+#export WORKON_HOME=$HOME/virtualenvs
+#source `which virtualenvwrapper.sh`
+#PIP_RESPECT_VIRTUALENV=true
 
 #opencv
 #export DYLD_FALLBACK_LIBRARY_PATH="/usr/local/opencv/lib:$DYLD_FALLBACK_LIBRARY_PATH"
@@ -128,3 +130,16 @@ source .zsh/plugin/incr*.zsh
 
 # ruby
 eval "$(rbenv init -)"
+
+# syntaxhighlight
+if [ -f ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh ]; then
+    source ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh
+fi
+
+# pyenv
+export PYENV_ROOT="${HOME}/.pyenv"
+if [ -d "${PYENV_ROOT}" ]; then
+    export PATH=${PYENV_ROOT}/bin:${PYENV_ROOT}/shims:$PATH
+    eval "$(pyenv init -)"
+fi
+
