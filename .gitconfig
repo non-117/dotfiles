@@ -2,7 +2,7 @@
 	name = non
 	email = mail@non117.com
 [core]
-	editor = emacs
+	editor = vim
 [color]
 	ui = true
 [alias]
@@ -13,11 +13,11 @@
 	ps = push
 	ch = checkout
 	cl = clone
-[https]
-	proxy = https://10.8.0.1:8123
-[http]
-	proxy = http://10.8.0.1:8123
 [url "https://"]
 	insteadOf = git://
 [push]
 	default = current
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true

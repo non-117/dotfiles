@@ -19,6 +19,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'kevinw/pyflakes-vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
+NeoBundle 'leafgarland/typescript-vim'
 NeoBundleLazy 'vim-jp/cpp-vim', {'autoload' : {'filetypes' : ['cpp','hpp','h']}}
 NeoBundleLazy 'majutsushi/tagbar', {'autoload' : {'commands':['TagbarToggle']}, 'build' : {'mac': 'brew install ctags'}}
 NeoBundleLazy 'lambdalisue/vim-django-support', {'autoload': {'filetypes': ['python', 'python3', 'djangohtml']}}
@@ -233,4 +234,11 @@ if executable("clang++")
     \ }
   let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
 endif
+
+"typescript
+let g:syntastic_mode_map = {
+	\ 'mode' : 'active',
+	\ 'active_filetypes' : ['javascript', 'typescript'],
+	\ 'passive_filetypes' : []
+	\}
 
