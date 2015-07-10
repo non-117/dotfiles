@@ -18,31 +18,7 @@ alias python='python3'
 alias py3='python3'
 
 #path
-PATH="/usr/local/bin:/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.cabal/bin:$PATH"
-
-#mikutter
-export LANG=ja_JP.UTF-8
-export XMODIFIERS=@im=uim
-export GTK_IM_MODULE=uim
-
-#node
-#if [[ -f ~/.nodebrew/nodebrew ]]; then
-#    export PATH=$HOME/.nodebrew/current/bin:$PATH
-#    nodebrew use 0.10
-#fi
-
-#python
-#export PYTHONPATH="$HOME/Documents/workspace/:$HOME/.pythonlib/:$PYTHONPATH"
-#export INCLUDE_PATH="/usr/local/Cellar/python/2.7.5/Frameworks/Python.framework/Versions/2.7/include/python2.7:$INCLUDE_PATH"
-#export WORKON_HOME=$HOME/virtualenvs
-#source `which virtualenvwrapper.sh`
-PIP_RESPECT_VIRTUALENV=true
-
-#opencv
-#export DYLD_FALLBACK_LIBRARY_PATH="/usr/local/opencv/lib:$DYLD_FALLBACK_LIBRARY_PATH"
-export INCLUDE_PATH="/usr/local/opencv/include:$INCLUDE_PATH"
-export LD_LIBRARY_PATH="/usr/local/opencv/lib:$LD_LIBRARY_PATH"
-export PKG_CONFIG_PATH="/usr/local/opencv/lib/pkgconfig:/usr/lib/pkgconfig:$PKG_CONFIG_PATH"
+PATH="/usr/local/bin:/usr/local/sbin:$HOME/.cabal/bin:$PATH"
 
 #emacs keybind
 bindkey -e
@@ -141,15 +117,6 @@ eval "$(rbenv init -)"
 if [ -f ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh
 fi
-
-
-###-begin-npm-completion-###
-#
-# npm command completion script
-#
-# Installation: npm completion >> ~/.bashrc  (or ~/.zshrc)
-# Or, maybe: npm completion > /usr/local/etc/bash_completion.d/npm
-#
 
 COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
 COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}

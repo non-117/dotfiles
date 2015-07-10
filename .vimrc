@@ -6,14 +6,25 @@ if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('~/.vim/bundle'))
-"My Bundles hre
-NeoBundle 'Shougo/neobundle.vim'
+call neobundle#begin(expand('~/.vim/bundle'))
+NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {'build' : {'mac':'make -f make_mac.mak'}, }
 NeoBundle 'Shougo/vimshell'
 NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/neocomplcache'
+" 補完
+NeoBundle 'Shougo/neocomplete.vim'
+NeoBundle 'marcus/rsense'
+NeoBundle 'supermomonga/neocomplete-rsense.vim'
+" document
+NeoBundle 'thinca/vim-ref'
+NeoBundle 'yuku-t/vim-ref-ri'
+" method jump
+NeoBundle 'szw/vim-tags'
+" close begin - end
+NeoBundle 'tpope/vim-endwise'
+
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'kevinw/pyflakes-vim'
@@ -24,11 +35,12 @@ NeoBundleLazy 'vim-jp/cpp-vim', {'autoload' : {'filetypes' : ['cpp','hpp','h']}}
 NeoBundleLazy 'majutsushi/tagbar', {'autoload' : {'commands':['TagbarToggle']}, 'build' : {'mac': 'brew install ctags'}}
 NeoBundleLazy 'lambdalisue/vim-django-support', {'autoload': {'filetypes': ['python', 'python3', 'djangohtml']}}
 "NeoBundleLazy 'davidhalter/jedi-vim', {'autoload': {'filetypes': ['python', 'python3', 'djangohtml']}}
-
+call neobundle#end()
 filetype plugin indent on
 
 "syntastic settings
-let g:syntastic_mode_map = {'mode':'active', 'active_filetypes':['ruby','vim','C++'], 'passive_filetypes':['python']}
+let g:syntastic_mode_map = {'mode':'active', 'active_filetypes':['ruby','vim','C++','javascript','typescript'], 'passive_filetypes':['python']}
+let g:systastic_ruby_checkers = ['rubocop']
 
 "文字コード自動認識
 set fencs=utf-8,shift-jis,euc-jp
@@ -47,6 +59,8 @@ set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲ "不可視�
 set number "行番号
 set tabstop=4 "Tab文字
 set shiftwidth=4 "vimが挿入するインデント
+set expandtab " TABで空白
+set autoindent " 新しい行はインデント
 set cindent "賢いインデント
 set ignorecase "小文字の検索でも大文字が見つかる
 set smartcase "明示的にされたら上は無し
@@ -54,7 +68,7 @@ set backspace=indent,eol,start "バックスペースで消せる
 set nostartofline "移動コマンドで行頭に行かない
 set matchpairs& matchpairs+=<:> "括弧のペア追加
 set showmatch "対応括弧をハイライト
-set matchtime=3 "対応括弧の表示秒数
+set matchtime=1 "対応括弧の表示秒数
 set wrap "折り返し
 "set shiftround "インデントをshiftwidthの倍数にround
 set infercase "補完の際のcaseを区別しない
@@ -194,7 +208,6 @@ endfunction
 
 "Python Settings
 function! InitPython()
-  setlocal autoindent
   setlocal smartindent
   setlocal cinwords=if,elif,else,for,while,try,except,finally,def,class
 
@@ -218,6 +231,23 @@ let g:flake8_builtins="_,apply"
 "  let g:jedi#goto_command = '<Leader>G'
 "endfunction
 
+"Ruby Settings
+let g:rsenseHome = '/usr/local/Cellar/rsense/0.3/libexec'
+let g:rsenseUseOmniFunc = 1
+" neocomplete
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
+
+function! InitRuby()
+  setlocal tabstop=2 shiftwidth=2 softtabstop=2
+endfunction
+autocmd BufEnter * if &filetype == "ruby" | call InitRuby() | endif 
+
 " C++11 Settings
 augroup cpp-path
   autocmd!
@@ -234,11 +264,4 @@ if executable("clang++")
     \ }
   let g:quickrun_config['cpp'] = {'type': 'cpp/clang++11'}
 endif
-
-"typescript
-let g:syntastic_mode_map = {
-	\ 'mode' : 'active',
-	\ 'active_filetypes' : ['javascript', 'typescript'],
-	\ 'passive_filetypes' : []
-	\}
 
