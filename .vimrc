@@ -1,8 +1,6 @@
 filetype off
-filetype plugin indent off
 
 if has('vim_starting')
-  set nocompatible
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
@@ -24,6 +22,8 @@ NeoBundle 'yuku-t/vim-ref-ri'
 NeoBundle 'szw/vim-tags'
 " close begin - end
 NeoBundle 'tpope/vim-endwise'
+" color scheme
+NeoBundle 'tomasr/molokai'
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'scrooloose/syntastic'
@@ -38,6 +38,8 @@ NeoBundleLazy 'lambdalisue/vim-django-support', {'autoload': {'filetypes': ['pyt
 call neobundle#end()
 filetype plugin indent on
 
+NeoBundleCheck
+
 "syntastic settings
 let g:syntastic_mode_map = {'mode':'active', 'active_filetypes':['ruby','vim','C++','javascript','typescript'], 'passive_filetypes':['python']}
 let g:systastic_ruby_checkers = ['rubocop']
@@ -47,8 +49,7 @@ set fencs=utf-8,shift-jis,euc-jp
 set ambw=double
 
 "テーマ
-colorscheme pyte
-"シンタックスハイライト
+colorscheme molokai
 syntax on
 
 " Editor
