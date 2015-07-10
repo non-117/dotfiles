@@ -24,6 +24,8 @@ NeoBundle 'szw/vim-tags'
 NeoBundle 'tpope/vim-endwise'
 " color scheme
 NeoBundle 'tomasr/molokai'
+" restore vim status
+NeoBundle 'tpope/vim-obsession'
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'scrooloose/syntastic'
@@ -49,7 +51,7 @@ set fencs=utf-8,shift-jis,euc-jp
 set ambw=double
 
 "テーマ
-colorscheme molokai
+colorscheme Tomorrow-Night
 syntax on
 
 " Editor
