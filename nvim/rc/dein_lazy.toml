@@ -1,0 +1,39 @@
+[[plugins]]
+repo  = 'yuku-t/vim-ref-ri'
+on_ft = 'ruby'
+
+[[plugins]]
+repo  = 'tpope/vim-endwise'
+on_ft = 'ruby'
+
+[[plugins]]
+repo  = 'vim-ruby/vim-ruby'
+
+[[plugins]]
+repo  = 'slim-template/vim-slim'
+on_ft = 'slim'
+
+[[plugins]]
+repo  = 'jelera/vim-javascript-syntax'
+on_ft = 'javascript'
+
+[[plugins]]
+repo  = 'jiangmiao/simple-javascript-indenter'
+on_ft = 'javascript'
+
+[[plugins]]
+repo  = 'pmsorhaindo/syntastic-local-eslint.vim'
+on_ft = 'javascript'
+
+[[plugins]]
+repo  = 'kevinw/pyflakes-vim'
+on_ft = 'python'
+
+[[plugins]]
+repo   = 'majutsushi/tagbar'
+  [plugins.build]
+  mac = 'brew install ctags'
+on_cmd = 'TagbarToggle'
+
+[[plugins]]
+repo   = 'mxw/vim-jsx'
