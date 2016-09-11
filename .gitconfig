@@ -9,19 +9,10 @@
 	st = status
 	ci = commit -a
 	br = branch
-	pl = pull
-	ps = push
 	ch = checkout
-	cl = clone
 [url "https://"]
 	insteadOf = git://
 [push]
 	default = current
-[filter "hawser"]
-	clean = git hawser clean %f
-	smudge = git hawser smudge %f
-	required = true
-[filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-	required = true
+[fetch]
+  prune = true
