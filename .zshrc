@@ -1,31 +1,50 @@
 # history
 HISTFILE=~/.histfile
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=1000000
+SAVEHIST=1000000
 setopt hist_ignore_dups
 setopt share_history
-setopt combining_chars
 
 zstyle :compinstall filename '$HOME/.zshrc'
 
+# ENV config
+unset SSH_ASKPASS
+
 #alias
-alias ipaddr="curl 'http://dyn.value-domain.com/cgi-bin/dyn.fcg?ip';echo"
 alias now='date "+%y/%m/%d %H:%M:%S"'
-alias cot='open $1 -a /Applications/CotEditor.app'
-alias vpn='sudo openvpn $HOME/Dropbox/Server/openvpn2/openvpn443.conf'
-#alias python='python3'
-alias py3='python3'
-alias con='bundle exec rails console'
+alias tmux="TERM=screen-256color-bce tmux"
+if [[ -x `which colordiff` ]]; then
+  alias diff='colordiff -u'
+  export LESS='-R'
+else
+  alias diff='diff -u'
+fi
+alias con='rails c'
+alias server='rails s -b 0.0.0.0'
+alias weather='curl http://wttr.in/kyoto'
+
+#proxy
+#export http_proxy=''
+#export https_proxy=''
+
+#vim
+export XDG_CONFIG_HOME=$HOME/.config
 
 #path
-export GOPATH=$HOME/go/third-party
-export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.cabal/bin:$HOME/.pyenv/bin:$PATH:/usr/local/opt/go/libexec/bin:$GOPATH/bin"
+PATH="/usr/local/bin:/usr/local/sbin:$HOME/.rbenv/bin:$HOME/.pyenv/bin:$HOME/build/bin:/usr/local/opt/go/libexec/bin:$HOME/.nodebrew/current/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
 
 #emacs keybind
 bindkey -e
+export EDITOR=vim
+#hjkl
 
-#complement
-autoload -Uz compinit && compinit
+# less
+export LESS='-R --no-init --quit-if-one-screen'
+export LESSOPEN='| /usr/local/bin/src-hilite-lesspipe.sh %s'
+
+# gtags
+export GTAGSLABEL=pygments
 
 # encoding
 export LANG=ja_JP.UTF-8
@@ -95,7 +114,6 @@ zle -N self-insert url-quote-magic
 #abbreviation
 typeset -A myabbrev
 myabbrev=(
-#    "ll"    "| less"
     "lg"    "| grep"
     "tx"    "tar -xvzf"
 )
@@ -114,66 +132,32 @@ source ~/.zsh/plugin/incr*.zsh
 # ruby
 eval "$(rbenv init -)"
 
-# pyenv
+# python
 eval "$(pyenv init -)"
+
+# direnv
+eval "$(direnv hook zsh)"
 
 # syntaxhighlight
 if [ -f ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh ]; then
     source ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh
 fi
 
-COMP_WORDBREAKS=${COMP_WORDBREAKS/=/}
-COMP_WORDBREAKS=${COMP_WORDBREAKS/@/}
-export COMP_WORDBREAKS
+export REPORTTIME=1
 
-if type complete &>/dev/null; then
-  _npm_completion () {
-    local si="$IFS"
-    IFS=$'\n' COMPREPLY=($(COMP_CWORD="$COMP_CWORD" \
-                           COMP_LINE="$COMP_LINE" \
-                           COMP_POINT="$COMP_POINT" \
-                           npm completion -- "${COMP_WORDS[@]}" \
-                           2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  complete -F _npm_completion npm
-elif type compdef &>/dev/null; then
-  _npm_completion() {
-    si=$IFS
-    compadd -- $(COMP_CWORD=$((CURRENT-1)) \
-                 COMP_LINE=$BUFFER \
-                 COMP_POINT=0 \
-                 npm completion -- "${words[@]}" \
-                 2>/dev/null)
-    IFS=$si
-  }
-  compdef _npm_completion npm
-elif type compctl &>/dev/null; then
-  _npm_completion () {
-    local cword line point words si
-    read -Ac words
-    read -cn cword
-    let cword-=1
-    read -l line
-    read -ln point
-    si="$IFS"
-    IFS=$'\n' reply=($(COMP_CWORD="$cword" \
-                       COMP_LINE="$line" \
-                       COMP_POINT="$point" \
-                       npm completion -- "${words[@]}" \
-                       2>/dev/null)) || return $?
-    IFS="$si"
-  }
-  compctl -K _npm_completion npm
-fi
-###-end-npm-completion-###
+source ~/.pecorc
 
-function peco-history-selection() {
-    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
-    CURSOR=$#BUFFER
-    zle reset-prompt
+#complement
+autoload -Uz compinit && compinit
+
+man() {
+    env \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+        LESS_TERMCAP_md=$(printf "\e[1;31m") \
+        LESS_TERMCAP_me=$(printf "\e[0m") \
+        LESS_TERMCAP_se=$(printf "\e[0m") \
+        LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+        LESS_TERMCAP_ue=$(printf "\e[0m") \
+        LESS_TERMCAP_us=$(printf "\e[1;32m") \
+            man "$@"
 }
-
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
-
