@@ -26,6 +26,8 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tomasr/molokai'
 " restore vim status
 NeoBundle 'tpope/vim-obsession'
+" git diff
+NeoBundle 'airblade/vim-gitgutter'
 
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'scrooloose/syntastic'
@@ -33,6 +35,7 @@ NeoBundle 'kevinw/pyflakes-vim'
 NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'nathanaelkane/vim-indent-guides'
 NeoBundle 'leafgarland/typescript-vim'
+NeoBundle 'vim-jp/vim-go-extra'
 NeoBundleLazy 'vim-jp/cpp-vim', {'autoload' : {'filetypes' : ['cpp','hpp','h']}}
 NeoBundleLazy 'majutsushi/tagbar', {'autoload' : {'commands':['TagbarToggle']}, 'build' : {'mac': 'brew install ctags'}}
 NeoBundleLazy 'lambdalisue/vim-django-support', {'autoload': {'filetypes': ['python', 'python3', 'djangohtml']}}
@@ -43,8 +46,9 @@ filetype plugin indent on
 NeoBundleCheck
 
 "syntastic settings
-let g:syntastic_mode_map = {'mode':'active', 'active_filetypes':['ruby','vim','C++','javascript','typescript'], 'passive_filetypes':['python']}
-let g:systastic_ruby_checkers = ['rubocop']
+let g:syntastic_mode_map = {'mode':'passive', 'active_filetypes':['ruby','vim','C++','go','javascript','typescript'], 'passive_filetypes':['python']}
+let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_go_checkers = ['go', 'golint']
 
 "文字コード自動認識
 set fencs=utf-8,shift-jis,euc-jp
@@ -60,8 +64,9 @@ set fileencoding=utf8
 set list "不可視文字を表示
 set listchars=tab:»-,trail:-,extends:»,precedes:«,nbsp:%,eol:↲ "不可視文字を表示
 set number "行番号
-set tabstop=4 "Tab文字
-set shiftwidth=4 "vimが挿入するインデント
+set tabstop=2 "Tab文字
+set shiftwidth=2 "vimが挿入するインデント
+set softtabstop=2 
 set expandtab " TABで空白
 set autoindent " 新しい行はインデント
 set cindent "賢いインデント
@@ -245,11 +250,6 @@ if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns.ruby = '[^.*\t]\.\w*\|\h\w*::'
-
-function! InitRuby()
-  setlocal tabstop=2 shiftwidth=2 softtabstop=2
-endfunction
-autocmd BufEnter * if &filetype == "ruby" | call InitRuby() | endif 
 
 " C++11 Settings
 augroup cpp-path

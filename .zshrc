@@ -4,21 +4,22 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt hist_ignore_dups
 setopt share_history
+setopt combining_chars
 
 zstyle :compinstall filename '$HOME/.zshrc'
 
 #alias
 alias ipaddr="curl 'http://dyn.value-domain.com/cgi-bin/dyn.fcg?ip';echo"
 alias now='date "+%y/%m/%d %H:%M:%S"'
-alias ws="cd $HOME/Documents/workspace"
-alias rs="python manage.py runserver"
 alias cot='open $1 -a /Applications/CotEditor.app'
 alias vpn='sudo openvpn $HOME/Dropbox/Server/openvpn2/openvpn443.conf'
-alias python='python3'
+#alias python='python3'
 alias py3='python3'
+alias con='bundle exec rails console'
 
 #path
-PATH="/usr/local/bin:/usr/local/sbin:$HOME/.cabal/bin:$PATH"
+export GOPATH=$HOME/go/third-party
+export PATH="/usr/local/bin:/usr/local/sbin:$HOME/.cabal/bin:$HOME/.pyenv/bin:$PATH:/usr/local/opt/go/libexec/bin:$GOPATH/bin"
 
 #emacs keybind
 bindkey -e
@@ -108,10 +109,13 @@ my-expand-abbrev() {
 zle -N my-expand-abbrev
 bindkey     " "         my-expand-abbrev
 
-source .zsh/plugin/incr*.zsh
+source ~/.zsh/plugin/incr*.zsh
 
 # ruby
 eval "$(rbenv init -)"
+
+# pyenv
+eval "$(pyenv init -)"
 
 # syntaxhighlight
 if [ -f ~/.zsh/syntax-highlight/zsh-syntax-highlighting.zsh ]; then
@@ -163,3 +167,13 @@ elif type compctl &>/dev/null; then
   compctl -K _npm_completion npm
 fi
 ###-end-npm-completion-###
+
+function peco-history-selection() {
+    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+    CURSOR=$#BUFFER
+    zle reset-prompt
+}
+
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
+
