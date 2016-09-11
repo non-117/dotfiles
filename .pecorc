@@ -1,0 +1,93 @@
+# git-checkout with peco
+# ref: http://shibayu36.hatenablog.com/entry/2014/07/26/151106
+function peco-git-recent-branches() {
+  local SELECTED_BRANCH="$(git for-each-ref --format='%(refname)' --sort=-committerdate refs/heads | \
+    perl -pne 's{^refs/heads/}{}' | \
+    peco)"
+  if [ -n "$SELECTED_BRANCH" ]; then
+    if [ -n "$BUFFER" ]; then
+      BUFFER="${BUFFER}${SELECTED_BRANCH}"
+    else
+      BUFFER="git checkout ${SELECTED_BRANCH}"
+    fi
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-git-recent-branches
+bindkey "^gb"  peco-git-recent-branches
+bindkey "^g^b" peco-git-recent-branches
+
+# history with peco
+# ref: http://blog.kenjiskywalker.org/blog/2014/06/12/peco/
+# ref: http://qiita.com/uchiko/items/f6b1528d7362c9310da0
+function peco-select-history() {
+  local TAC
+  if which tac > /dev/null; then
+    TAC="tac"
+  else
+    TAC="tail -r"
+  fi
+  BUFFER=$(\history -n 1 | \
+    eval $TAC | \
+    peco --query "$BUFFER")
+  CURSOR=$#BUFFER
+  zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^r' peco-select-history
+
+# ssh with peco
+# ref: http://qiita.com/d6rkaiz/items/46e9c61c412c89e84c38
+function peco-ssh() {
+  # Host で * や ? を使用しているものは除外
+  #  BUFFER="ssh $(grep '^Host ' ~/.ssh/config | grep -v '[*?]' | cut -c 6- | sort | peco | cut -d ' ' -f 1)"
+
+  # Hostの次の行にあるコメントをホスト名と一緒に表示するためのrubyワンライナー
+  #
+  # Host hostname
+  #   # COMMENT
+  #   HostName 1.2.3.4
+  #
+  # 上記の形式をパースして "hostname  # COMMENT" に変換します
+  # BUFFER="ssh $(ruby -e "File.read('/home/hara_masaki/.ssh/config').scan(/#\s+Host |Host ([^*?\s]+)\n\s+(# [^\n]+)\n|Host ([^*?\s]+)\n/).each do |info|; unless info.first.nil?; puts \"#{info[0]}\t#{info[1]}\"; else; puts info.last; end; end" | sort | peco | cut -f 1)"
+  BUFFER="ssh $(ruby -e "File.read('$HOME/.ssh/config').scan(/#[ \t]+Host|Host ([^*?\s]+)\n\s+(# [^\n]+)\n|Host ([^*?\s]+)\n/).each do |info| unless info.first.nil?; puts \"#{info[0]}\t#{info[1]}\"; else; puts info.last; end; end" | sort | peco | cut -f 1)"
+  CURSOR=4
+  zle clear-screen
+}
+zle -N peco-ssh
+bindkey '^s^s' peco-ssh
+
+#-
+unction peco-pt-vim () {
+  local SELECTED_FILES="$(pt "$LBUFFER" | peco)"
+  local N="$(echo $SELECTED_FILES | awk '{print $1}' | sort | uniq | wc -l)" # ファイル数を調べる
+  if [ $N -gt 1 ]; then
+    # 複数ファイルを開く (ファイル名に空白が含まれている場合はうまく動かない)
+    vim $(echo $SELECTED_FILES | awk -F : '{print $1}' | sort | uniq)
+  else
+    # 1ファイルなら行指定で開く
+    vim $(echo $SELECTED_FILES | awk -F : '{print "-c " $2 " " $1}')
+  fi
+}
+alias pv='peco-pt-vim'
+
+# vim open with peco selected
+function peco-find-vim () {
+  local FILES=''
+  if [ $(git rev-parse --is-inside-work-tree 2> /dev/null) = 'true' ]; then
+    FILES=$(echo $(git ls-files -o --exclude-standard) $(git ls-files) | tr ' ' '\n' | peco --query "$*" | tr '\n' ' ')
+  else
+    FILES=$(find . | peco --query "$*" | tr '\n' ' ')
+  fi
+  if [ -n "$FILES" ]; then
+    vim $(echo $FILES)
+  fi
+}
+alias v='peco-find-vim'
+
+function jump-and-tmux-rename-window() {
+  j "$@"
+  tmux rename-window ${PWD:t}
+}
+alias j='jump-and-tmux-rename-window'
